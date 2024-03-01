@@ -1,8 +1,9 @@
 class UserAchievement < ApplicationRecord
-  # Associations
+  # ASSOCIATIONS
   belongs_to :user_info
   belongs_to :achievement
 
+  # CALLBACKS
   # Add achievement points to UserInfo points after creation
   after_create :update_user_info_points
 

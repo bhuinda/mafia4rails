@@ -28,12 +28,7 @@ class UsersController < ApplicationController
       @user = User.new(user_params)
   
       if @user.save
-        @user_info = UserInfo.new(user: @user, points: 0)
-        if @user_info.save
-          render json: {message: "User was successfully created."}, status: :created
-        else
-          render json: @user_info.errors, status: :unprocessable_entity
-        end
+        render json: {message: "User was successfully created."}
       else
         render json: @user.errors, status: :unprocessable_entity
       end
