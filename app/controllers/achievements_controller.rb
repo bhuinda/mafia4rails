@@ -1,4 +1,3 @@
-# For managing achievements from the admin dashboard
 class AchievementsController < ApplicationController
     # GET /achievements
     def index

@@ -1,4 +1,3 @@
-# For managing users' achievements from the admin dashboard
 class UserAchievementsController < ApplicationController
     before_action :authenticate_request, except: [:create]
 
