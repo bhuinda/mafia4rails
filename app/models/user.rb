@@ -14,6 +14,6 @@ class User < ApplicationRecord
     private
 
     def create_user_info
-        UserInfo.create(user: self, points: 0)
+        UserInfo.create(user: self)
     end
 end

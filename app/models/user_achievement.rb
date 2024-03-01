@@ -3,8 +3,12 @@ class UserAchievement < ApplicationRecord
   belongs_to :user_info
   belongs_to :achievement
 
+  # VALIDATIONS
+  validates :user_info, presence: true
+  validates :achievement, presence: true
+
   # CALLBACKS
-  # Add achievement points to UserInfo points after creation
+  # Add Achievement points to UserInfo points after creation
   after_create :update_user_info_points
 
   private
