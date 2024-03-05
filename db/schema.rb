@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_05_022351) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_05_041824) do
   create_table "achievements", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -64,9 +64,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_05_022351) do
   end
 
   add_foreign_key "friend_requests", "users"
-  add_foreign_key "friend_requests", "users"
   add_foreign_key "friend_requests", "users", column: "friend_id"
-  add_foreign_key "friendships", "users"
   add_foreign_key "friendships", "users"
   add_foreign_key "friendships", "users", column: "friend_id"
   add_foreign_key "user_achievements", "achievements"
