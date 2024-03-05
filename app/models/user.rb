@@ -1,7 +1,9 @@
 class User < ApplicationRecord
     # ASSOCIATIONS
     has_secure_password
-    has_one :user_info
+    has_one :user_info, dependent: :destroy
+    has_many :friend_requests, dependent: :destroy
+    has_many :pending_friends, through: :friend_requests, source: :friend
 
     # VALIDATIONS
     validates :email, presence: true, uniqueness: true
