@@ -11,15 +11,6 @@ class AchievementsController < ApplicationController
         render json: @achievement
     end
 
-    # GET /achievements/new
-    def new
-        @achievement = Achievement.new
-    end
-
-    # GET /achievements/1/edit
-    def edit
-    end
-
     # POST /achievements
     def create
         @achievement = Achievement.new(achievement_params)
@@ -31,8 +22,15 @@ class AchievementsController < ApplicationController
         end
     end
 
-    # PATCH/PUT /achievements/1
+    # PATCH /achievements/1
     def update
+        @achievement = Achievement.find(params[:id])
+
+        if @achievement.update(achievement_params)
+            render json: {message: "Achievement was successfully updated."}, status: :ok
+        else
+            render json: @achievement.errors, status: :unprocessable_entity
+        end
     end
 
     # DELETE /achievements/1

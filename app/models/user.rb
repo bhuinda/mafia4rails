@@ -15,11 +15,11 @@ class User < ApplicationRecord
     validates :username, presence: true, uniqueness: true, length: { minimum: 3 }
 
     # CALLBACKS
-    # Create UserInfo after User creation
     after_create :create_user_info
 
     private
 
+    # Create UserInfo after User creation
     def create_user_info
         UserInfo.create(user: self)
     end

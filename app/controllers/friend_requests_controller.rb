@@ -21,7 +21,7 @@ class FriendRequestsController < ApplicationController
         render json: {incoming: @incoming, outgoing: @outgoing}, status: :ok
     end
 
-    # PATCH/PUT (ACCEPT) /friend_requests/1
+    # PATCH (ACCEPT) /friend_requests/1
     def update
         if @friend_request.accept
             render json: {message: "Friend request was successfully accepted."}, status: :ok
