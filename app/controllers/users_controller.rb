@@ -5,18 +5,22 @@ class UsersController < ApplicationController
     # GET /users
     def index
       @users = User.all
-      render json: @users
+      render json: UserBlueprint.render(@users, view: :normal), status: :ok
     end
   
     # GET /users/1
     def show
-      @user = User.find(params[:id])
-      render json: UserBlueprint.render(user, view: :normal), status: :ok
+      @user = User.find_by(params[:id])
+
+      if @user
+        render json: UserBlueprint.render(@user, view: :normal), status: :ok
+      else
+        render json: {error: "User not found."}, status: :not_found
+      end
     end
   
     # GET /users/new
     def new
-      @user = User.new
     end
   
     # GET /users/1/edit
@@ -28,7 +32,7 @@ class UsersController < ApplicationController
       @user = User.new(user_params)
   
       if @user.save
-        render json: {message: "User was successfully created."}
+        render json: {message: "User was successfully created."}, status: :created
       else
         render json: @user.errors, status: :unprocessable_entity
       end
@@ -37,7 +41,7 @@ class UsersController < ApplicationController
     # PATCH/PUT /users/1
     def update
       if @user.update(user_params)
-        render json: {message: "User was successfully updated."}
+        render json: {message: "User was successfully updated."}, status: :ok
       else
         render json: @user.errors, status: :unprocessable_entity
       end
@@ -46,7 +50,7 @@ class UsersController < ApplicationController
     # DELETE /users/1
     def destroy
       if @user.destroy
-        render json: {message: "User was successfully deleted."}
+        render json: {message: "User was successfully deleted."}, status: :ok
       else
         render json: @user.errors, status: :unprocessable_entity
       end
