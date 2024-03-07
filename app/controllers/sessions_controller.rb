@@ -9,6 +9,17 @@ class SessionsController < ApplicationController
     end
   end
 
+  def validate
+    header = request.headers['Authorization']
+    header = header.split(' ').last if header
+    begin
+      decoded = JWT.decode(header, Rails.application.secret_key_base).first
+      render json: { valid: true }, status: :ok
+    rescue JWT::DecodeError, JWT::ExpiredSignature
+      render json: { valid: false }, status: :ok
+    end
+  end
+
   private
 
   def jwt_encode(payload, exp = 24.hours.from_now)

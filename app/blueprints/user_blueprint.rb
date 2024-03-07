@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class UserBlueprint < Blueprinter::Base
-    identifier: :id
+    identifier :id
 
     view :normal do
         fields :username
