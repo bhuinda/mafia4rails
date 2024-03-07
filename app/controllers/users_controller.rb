@@ -1,6 +1,11 @@
 class UsersController < ApplicationController
     before_action :authenticate_request, except: [:create]
     before_action :set_user, only: [:show, :edit, :update, :destroy]
+
+    # GET /users/me
+    def me
+      render json: UserBlueprint.render(@current_user, view: :full), status: :ok
+    end
   
     # GET /users
     def index
