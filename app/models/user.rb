@@ -2,7 +2,7 @@ class User < ApplicationRecord
     # ASSOCIATIONS
     has_secure_password
 
-    has_one :user_info, dependent: :destroy
+    has_one :info, class_name: 'UserInfo', dependent: :destroy
 
     has_many :friend_requests, dependent: :destroy
     has_many :pending_friends, through: :friend_requests, source: :friend
