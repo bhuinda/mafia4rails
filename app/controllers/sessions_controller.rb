@@ -1,7 +1,7 @@
 class SessionsController < ApplicationController
   def create
-    user = User.find_by(email: params[:email])
-    if user&.authenticate(params[:password])
+    user = User.find_by(email: user_params[:email])
+    if user&.authenticate(user_params[:password])
       token = jwt_encode(user_id: user.id)
       render json: { token: token }, status: :ok     
     else
@@ -21,6 +21,10 @@ class SessionsController < ApplicationController
   end
 
   private
+
+  def user_params
+    params.require(:user).permit(:email, :password)
+  end
 
   def jwt_encode(payload, exp = 24.hours.from_now)
     payload[:exp] = exp.to_i
