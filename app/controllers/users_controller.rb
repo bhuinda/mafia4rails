@@ -23,6 +23,18 @@ class UsersController < ApplicationController
         render json: {error: "User not found."}, status: :not_found
       end
     end
+
+    # POST /users/find
+    def find
+      @user = User.find_by(params[:username])
+
+      if @user
+        render json: UserBlueprint.render(@user, view: :normal), status: :ok
+      else
+        render json: {error: "User not found."}, status: :not_found
+      end
+
+    end
   
     # GET /users/new
     def new
