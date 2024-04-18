@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-  get 'users/me', to: 'users#me'
   post 'users/find', to: 'users#find'
   resources :users
 
@@ -9,6 +8,10 @@ Rails.application.routes.draw do
   resources :friend_requests
 
   resources :friendships
+
+  resources :user_info
+
+  resources :messages
 
   post 'login', to: 'sessions#create'
   get 'validate_token', to: 'sessions#validate'
