@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   delete 'friend_requests/:id/decline', to: 'friend_requests#destroy'
   resources :friend_requests
 
+  resources :friendships
+
   post 'login', to: 'sessions#create'
   get 'validate_token', to: 'sessions#validate'
 

@@ -4,7 +4,7 @@ class FriendshipsController < ApplicationController
   # POST /friendships
   def index
     @friends = @current_user.friends
-    render json: @friends, status: :ok
+    render json: @friends.as_json(only: [:username]), status: :ok
   end
 
   # DELETE /friendships/1

@@ -5,19 +5,23 @@ class FriendRequestsController < ApplicationController
     # POST /friend_requests
     def create
         friend = User.find(params[:friend_id])
-      
-        if Friendship.exists?(user_id: @current_user.id, friend_id: friend.id)
-          render json: { message: "Friendship already exists." }, status: :unprocessable_entity
-        elsif FriendRequest.exists?(user_id: @current_user.id, friend_id: friend.id) || FriendRequest.exists?(user_id: friend.id, friend_id: @current_user.id)
-          render json: { message: "Friend request already exists." }, status: :unprocessable_entity
+
+        if friend
+            if Friendship.exists?(user_id: @current_user.id, friend_id: friend.id)
+                render json: { message: "Friendship already exists." }, status: :unprocessable_entity
+            elsif FriendRequest.exists?(user_id: @current_user.id, friend_id: friend.id) || FriendRequest.exists?(user_id: friend.id, friend_id: @current_user.id)
+                render json: { message: "Friend request already exists." }, status: :unprocessable_entity
+            else
+                @friend_request = @current_user.friend_requests.new(friend: friend)
+
+                if @friend_request.save
+                    render json: { message: "Friend request was successfully created." }, status: :created
+                else
+                    render json: { message: "Friend request failed." }, status: :unprocessable_entity
+                end
+            end
         else
-          @friend_request = @current_user.friend_requests.new(friend: friend)
-      
-          if @friend_request.save
-            render json: { message: "Friend request was successfully created." }, status: :created
-          else
-            render json: { message: "Friend request failed." }, status: :unprocessable_entity
-          end
+            render json: { message: "Friend not found." }, status: :not_found
         end
     end
 
@@ -25,8 +29,12 @@ class FriendRequestsController < ApplicationController
     def index
         @incoming = FriendRequest.where(friend: @current_user)
         @outgoing = @current_user.friend_requests
-        render json: { incoming: @incoming, outgoing: @outgoing }, status: :ok
-    end
+      
+        render json: { 
+          incoming: @incoming.as_json(include: { user: { only: :username } }), 
+          outgoing: @outgoing.as_json(include: { friend: { only: :username } })
+        }, status: :ok
+      end
 
     # PUT (ACCEPT) /friend_requests/:id/accept
     def update
