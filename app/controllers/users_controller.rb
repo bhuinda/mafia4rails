@@ -26,7 +26,7 @@ class UsersController < ApplicationController
 
     # POST /users/find
     def find
-      @user = User.find_by(params[:username])
+      @user = User.find_by(username: params[:username])
 
       if @user
         render json: UserBlueprint.render(@user, view: :normal), status: :ok
