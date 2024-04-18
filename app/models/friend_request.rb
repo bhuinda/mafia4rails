@@ -8,13 +8,13 @@ class FriendRequest < ApplicationRecord
   validates :user, presence: true, uniqueness: { scope: :friend }
   validates :friend, presence: true, uniqueness: { scope: :user }
 
-  private
-
-  # Create friendship, then destroy; see PATCH in controller
+  # Create friendship, then destroy; see UPDATE in controller
   def accept
     user.friends << friend
     destroy
   end
+
+  private
 
   # Check if user is trying to add themselves
   def not_self

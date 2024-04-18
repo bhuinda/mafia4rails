@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   post 'users/find', to: 'users#find'
   resources :users
 
+  put 'friend_requests/:id/accept', to: 'friend_requests#update'
+  delete 'friend_requests/:id/decline', to: 'friend_requests#destroy'
   resources :friend_requests
 
   post 'login', to: 'sessions#create'
